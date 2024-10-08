@@ -6,15 +6,15 @@ You can select whichever language and toolset you prefer although OO is preferre
 
 ### My understanding
 
-#### "Using your understading of best practices"
+#### "Using your understanding of best practices"
 I'm really not sure what any specific best practices are. The best I can do is work backwards from what I think a test *should* be. That is, I want to write them such that:
 
-<ul>The test tests an important facet of the app, and every important facet is tested</ul>
-<ul>Negatives of these tests are also important to check for false positives I imagine</ul>
-<ul>The test needs to be easy to ascertain what it's actually doing</ul>
-<ul>Other generic programming best practices (const over let unless necessary etc.)</ul>
+- The test tests an important facet of the app, and every important facet is tested.
+- Negatives of these tests are also important to check for false positives I imagine.
+- The test needs to be easy to ascertain what it's actually doing.
+- Other generic programming best practices (const over let unless necessary etc.).
 
-I'll have to evaluate my tests to see if it makes that criteria, but going by the philosophy system of point, evidence, and analysis to structure for my tests should make them fulfill all this. ie be very explicit about what you're testing, how you get there, and what you're looking for
+I'll have to evaluate my tests to see if it makes that criteria, but I should mostly be fine as long as I explicitly say  what I'm testing, how I'll get there, and what I'm looking for
 
 #### Create automated test that follow the CRUD cycle for one of the endpoint groups
 So automated tests for post, patch, get, and delete? And just for one of the endpoint groups, so just pets in this case I suppose.
