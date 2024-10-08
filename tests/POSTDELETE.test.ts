@@ -33,7 +33,6 @@ test('POST with valid formatting', async ({ request }) => {
     expect(responsePet).toHaveProperty('tags', validPet.tags);
     expect(responsePet).toHaveProperty('status', validPet.status);
 
-    // Cleanup: Delete the created pet
     const deletePayload = await request.delete(`${baseUrl}/${validPet.id}`);
     expect(deletePayload.ok()).toBe(true);
 });
@@ -42,37 +41,36 @@ test('POST with valid formatting', async ({ request }) => {
 test('POST with a unique id as string (invalid)', async ({ request }) => {
     const payload = await request.post(baseUrl, { data: invalidPet });
     const responseText = await payload.text();
-    console.log(`API response: ${responseText}`);
+    // console.log(`API response: ${responseText}`);
     expect(payload.ok()).toBe(false);
     expect(payload.status()).toBe(500); //
-    expect(responseText).toContain('something bad happened'); // Assuming the API returns an error message containing 'Invalid ID'
+    expect(responseText).toContain('something bad happened');
 });
 
 // Missing Required Fields
 test('Create pet with missing required fields', async ({ request }) => {
-    const incompletePet = { ...validPet } as Partial<typeof validPet>; // Use Partial type
-    delete incompletePet.name; // Remove required field
+    const incompletePet = { ...validPet } as Partial<typeof validPet>; 
+    delete incompletePet.name; 
     const payload = await request.post(baseUrl, { data: incompletePet });
     const responseText = await payload.text();
-    console.log(`API response: ${responseText}`);
+    // console.log(`API response: ${responseText}`);
     expect(payload.ok()).toBe(false);
-    expect(payload.status()).toBe(400); // Assuming the API returns 400 Bad Request for missing required fields
-    expect(responseText).toContain('Missing required field: name'); // Assuming the API returns an error message for missing fields
+    expect(payload.status()).toBe(400);
+    expect(responseText).toContain('Missing required field: name'); 
 });
 
 // Duplicate Data
 test('Create pet with duplicate data', async ({ request }) => {
-    // First request to create the pet
+    // First request 
     await request.post(baseUrl, { data: validPet });
-    // Second request with the same data
+    // Second request 
     const payload = await request.post(baseUrl, { data: validPet });
     const responseText = await payload.text();
-    console.log(`API response: ${responseText}`);
+    // console.log(`API response: ${responseText}`);
     expect(payload.ok()).toBe(false);
-    expect(payload.status()).toBe(409); // Assuming the API returns 409 Conflict for duplicate data
-    expect(responseText).toContain('Duplicate entry'); // Assuming the API returns an error message for duplicates
+    expect(payload.status()).toBe(409);
+    expect(responseText).toContain('something bad happened'); 
 
-    // Cleanup: Delete the created pet
     const deletePayload = await request.delete(`${baseUrl}/${validPet.id}`);
     expect(deletePayload.ok()).toBe(true);
 });

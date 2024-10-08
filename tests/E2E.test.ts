@@ -12,7 +12,7 @@ const validPet = {
     status: 'available'
 };
 
-// Valid Data
+//E2E
 test('Full CRUD E2E', async ({ request }) => {
     const payload = await request.post(baseUrl, { data: validPet });
     const responsePet = await payload.json();
@@ -25,7 +25,7 @@ test('Full CRUD E2E', async ({ request }) => {
     expect(responsePet).toHaveProperty('tags', validPet.tags);
     expect(responsePet).toHaveProperty('status', validPet.status);
 
-    // Update the pet's status
+    // PUT
     const updatedPet = { ...validPet, status: 'sold' };
     const updatePayload = await request.put(baseUrl, { data: updatedPet });
     const updatedResponsePet = await updatePayload.json();
@@ -33,18 +33,18 @@ test('Full CRUD E2E', async ({ request }) => {
     expect(updatedResponsePet).toHaveProperty('id', validPet.id);
     expect(updatedResponsePet).toHaveProperty('status', 'sold');
 
-    // Verify the pet's status was updated
+    // GET
     const getUpdatedPayload = await request.get(`${baseUrl}/${validPet.id}`);
     const getUpdatedResponsePet = await getUpdatedPayload.json();
     expect(getUpdatedPayload.ok()).toBe(true);
     expect(getUpdatedResponsePet).toHaveProperty('id', validPet.id);
     expect(getUpdatedResponsePet).toHaveProperty('status', 'sold');
 
-    // Cleanup: Delete the created pet
+    // DELETE
     const deletePayload = await request.delete(`${baseUrl}/${validPet.id}`);
     expect(deletePayload.ok()).toBe(true);
 
-    // Verify the pet was deleted
+    // GET
     const getDeletedPayload = await request.get(`${baseUrl}/${validPet.id}`);
     expect(getDeletedPayload.status()).toBe(404);
 });
